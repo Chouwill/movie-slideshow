@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+
 
 const movieArray = ref([
   {
@@ -14,8 +15,48 @@ const movieArray = ref([
     name: "商品3",
     price: 555,
   },
-  
+  {
+    name: "商品4",
+    price: 555,
+  },
+  {
+    name: "商品5",
+    price: 555,
+  },
+  {
+    name: "商品6",
+    price: 555,
+  },
+  {
+    name: "商品7",
+    price: 555,
+  },
+  {
+    name: "商品8",
+    price: 555,
+  },
+  {
+    name: "商品9",
+    price: 555,
+  },
 ]);
+
+movieArray.value.forEach((item) => {
+  console.log(item);
+});
+
+onMounted(() => {
+  const nextStep = document.querySelector(".nextStep");
+  const returnStep = document.querySelector(".returnStep");
+
+  console.log(nextStep);
+  console.log(returnStep);
+
+  nextStep.addEventListener("click", function(e){
+    console.log(e);
+    
+  })
+});
 </script>
 
 <template>
@@ -44,61 +85,12 @@ const movieArray = ref([
             /> -->
           </div>
         </div>
-        <!-- <div class="circle-father">
-          <div class="semicircle"></div>
-          <div class="date">
-            <p class="date-text">5月31日</p>
-          </div>
-          <div class="movie-pic">
-            <img src="https://image.tmdb.org/t/p/w500/zuXZnzHvXdWyVDVPZcLvPNrKvEq.jpg"
-            style="width: 181px; height: 271px;" alt="">
-          </div>
-        </div>
-        <div class="circle-father">
-          <div class="semicircle"></div>
-          <div class="date">
-            <p class="date-text">5月31日</p>
-          </div>
-          <div class="movie-pic">
-            <img src="https://image.tmdb.org/t/p/w500/zuXZnzHvXdWyVDVPZcLvPNrKvEq.jpg"
-            style="width: 181px; height: 271px;" alt="">
-          </div>
-        </div>
-        <div class="circle-father">
-          <div class="semicircle"></div>
-          <div class="date">
-            <p class="date-text">5月31日</p>
-          </div>
-          <div class="movie-pic">
-            <img src="https://image.tmdb.org/t/p/w500/zuXZnzHvXdWyVDVPZcLvPNrKvEq.jpg"
-            style="width: 181px; height: 271px;" alt="">
-          </div>
-        </div>
-        <div class="circle-father">
-          <div class="semicircle"></div>
-          <div class="date">
-            <p class="date-text">5月31日</p>
-          </div>
-          <div class="movie-pic">
-            <img src="https://image.tmdb.org/t/p/w500/zuXZnzHvXdWyVDVPZcLvPNrKvEq.jpg"
-            style="width: 181px; height: 271px;" alt="">
-          </div>
-        </div>
-        <div class="circle-father">
-          <div class="semicircle"></div>
-          <div class="date">
-            <p class="date-text">5月31日</p>
-          </div>
-          <div class="movie-pic">
-            <img src="https://image.tmdb.org/t/p/w500/zuXZnzHvXdWyVDVPZcLvPNrKvEq.jpg"
-            style="width: 181px; height: 271px;" alt="">
-          </div>
-        </div> -->
+        <!--  -->
       </div>
     </div>
 
-    <button>➡️</button>
-    <button>⬅️</button>
+    <button class="nextStep">➡️</button>
+    <button class="returnStep">⬅️</button>
   </div>
 </template>
 
@@ -147,11 +139,14 @@ const movieArray = ref([
       top: 28px;
     }
     .circle-box {
-      width: 100%;
+      width: 270px;
+      overflow: hidden;
+      align-items: center;
       display: flex;
-      border: 8px solid green;
-      gap: 0.2rem;
-      justify-content: space-around;
+      border: 8px solid green !important;
+      gap: 0.5rem;
+      // justify-content: space-around;
+      margin: 0 auto;
       .circle-father {
         gap: 0.5rem;
         border: 6px solid orange;
@@ -159,7 +154,7 @@ const movieArray = ref([
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        overflow: hidden;
+        width: 200px;
 
         .semicircle {
           width: 15px;
@@ -174,6 +169,7 @@ const movieArray = ref([
           text-align: center;
           border: 2px solid turquoise;
           padding: 0.5rem 0;
+
           .date-text {
             text-align: center;
             color: rgb(24, 170, 70);
@@ -189,10 +185,14 @@ const movieArray = ref([
       }
     }
   }
-  button{
+  button {
     padding: 20px;
     border-radius: 100%;
     font-size: 1.5rem;
   }
+}
+
+.range {
+  border: 3px solid red !important;
 }
 </style>
