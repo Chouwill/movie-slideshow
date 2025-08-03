@@ -1,6 +1,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+const itemNum = ref(3);
+
+const startNum = ref(0);
+
+const teamEnd = ref(3);
 
 const movieArray = ref([
   {
@@ -41,40 +46,52 @@ const movieArray = ref([
   },
 ]);
 
-movieArray.value.forEach((item) => {
-  console.log(item);
-});
+const nextStep = () => {
+  //第一次 3                                // 9
+  //第二次 6                                 // 9
+  //第三次 9                                 // 9
+  if (startNum.value + itemNum.value < movieArray.value.length) {
+    //第一次 6       // 3            // 3
+    //第二次  9       // 6             // 3
+    // 第三次 12        // 9            // 3
+    teamEnd.value = teamEnd.value + itemNum.value;
 
-onMounted(() => {
-  const nextStep = document.querySelector(".nextStep");
-  const returnStep = document.querySelector(".returnStep");
+    //第一次  3          //  0            //   3
+    // 第二次 6          // 3            // 3
+    //  第三次 9          // 6              // 3
+    startNum.value = startNum.value + itemNum.value;
 
-  console.log(nextStep);
-  console.log(returnStep);
-
-  nextStep.addEventListener("click", function(e){
-    console.log(e);
-    
-  })
-});
+    console.log("end範圍", teamEnd.value);
+    console.log("start", startNum.value);
+    console.log(movieArray.value);
+  } else {
+    console.log("已超出");
+    teamEnd.value = 9;
+    startNum.value = 6;
+  }
+};
 </script>
 
 <template>
   <div class="movie-box">
     <div class="title">
       <span></span>
-      <h2 class="title-text">即將上映</h2>
+      <h2 class="title-text">即將上映000</h2>
     </div>
     <div class="time-box">
       <div class="time-line"></div>
 
       <div class="circle-box">
-        <div class="circle-father" v-for="item in movieArray" :key="item.key">
+        <div class="circle-father">
           <div class="semicircle"></div>
           <div class="date">
             <p class="date-text">5月31日</p>
           </div>
-          <div class="movie-pic">
+          <div
+            class="movie-pic"
+            v-for="item in movieArray.slice(startNum, teamEnd)"
+            :key="item.key"
+          >
             {{ item.name }}
             <br />
             {{ item.price }}
@@ -89,7 +106,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <button class="nextStep">➡️</button>
+    <button @click="nextStep" class="nextStep">➡️</button>
     <button class="returnStep">⬅️</button>
   </div>
 </template>
