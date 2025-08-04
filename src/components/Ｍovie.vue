@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
+const pageNum = ref(0); //  頁碼 起始
+
 const itemNum = ref(3);
 
 const startNum = ref(0);
@@ -44,6 +46,14 @@ const movieArray = ref([
     name: "商品9",
     price: 555,
   },
+  {
+    name: "商品10",
+    price: 555,
+  },
+  {
+    name: "商品11",
+    price: 555,
+  },
 ]);
 
 const nextStep = () => {
@@ -64,12 +74,57 @@ const nextStep = () => {
     console.log("end範圍", teamEnd.value);
     console.log("start", startNum.value);
     console.log(movieArray.value);
+    NextPage();
   } else {
     console.log("已超出");
     teamEnd.value = 9;
     startNum.value = 6;
   }
 };
+
+const returnStep = () => {
+  if (startNum.value <= 0) {
+    console.log("已超出");
+    startNum.value = 0;
+    teamEnd.value = 3;
+  } else if (startNum.value - itemNum.value < movieArray.value.length) {
+    startNum.value = startNum.value - itemNum.value;
+
+    teamEnd.value = teamEnd.value - itemNum.value;
+
+    console.log("end範圍", teamEnd.value);
+    console.log("start", startNum.value);
+    console.log(movieArray.value);
+
+    ReturnPage();
+  }
+};
+
+function NextPage() {
+  pageNum.value++;
+
+  console.log(pageNum.value);
+}
+
+function ReturnPage() {
+  pageNum.value--;
+  console.log(pageNum.value);
+}
+
+//  如果處於第1張 0 , 3  ====>  按左鍵左滑不動  ----->    頁0
+//      第一次   -3 , 0
+//      第二次   -6 , -3
+//      第三次   -9 , -6
+
+// 如果處於第2張 3 , 6  ====>  按左鍵左滑可動  ----->左右都能滑     頁1
+//      第一次   0 , 3
+//      第二次   -3 , 0
+//      第三次   -6 , -3
+
+//  如果處於第3張 6 , 9  ====>  按右鍵右滑不動  ----->只能左滑       頁2
+//      第一次   3  , 6
+//      第二次   0  , 3
+//      第三次   -3 , 0
 </script>
 
 <template>
@@ -86,6 +141,8 @@ const nextStep = () => {
           <div class="semicircle"></div>
           <div class="date">
             <p class="date-text">5月31日</p>
+
+            <h2 style="font-size: 35px">{{ pageNum }}</h2>
           </div>
           <div
             class="movie-pic"
@@ -107,7 +164,7 @@ const nextStep = () => {
     </div>
 
     <button @click="nextStep" class="nextStep">➡️</button>
-    <button class="returnStep">⬅️</button>
+    <button @click="returnStep" class="returnStep">⬅️</button>
   </div>
 </template>
 
@@ -157,6 +214,7 @@ const nextStep = () => {
     }
     .circle-box {
       width: 270px;
+      height: auto;
       overflow: hidden;
       align-items: center;
       display: flex;
